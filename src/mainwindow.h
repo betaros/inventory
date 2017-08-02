@@ -4,10 +4,6 @@
 #include "config.h"
 #include <QMainWindow>
 
-#include "widgetcustomer.h"
-#include "widgetelement.h"
-#include "widgetmaterial.h"
-
 namespace Ui {
 class MainWindow;
 }
@@ -23,9 +19,6 @@ public:
 private:
     Ui::MainWindow *ui;
 
-    widgetCustomer wCustomer;
-    //widgetElement Element;
-    //widgetMaterial Material;
 };
 
 #endif // MAINWINDOW_H

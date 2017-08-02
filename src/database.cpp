@@ -19,24 +19,25 @@ Database::Database(const QString& _path)
 
 bool Database::createDb()
 {
-    bool result = false;
+    bool result = true;
 
     QSqlQuery query;
-    query.prepare("CREATE TABLE customers (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, Name TEXT, Description TEXT, Image TEXT, Materials INTEGER);");
+    QStringList createQuerys;
+    createQuerys.append("CREATE TABLE customers (Id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, Name TEXT, Description TEXT, Image TEXT);");
+    createQuerys.append("CREATE TABLE elements (Id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, Name TEXT, Price INTEGER, Description TEXT, Source TEXT);");
+    createQuerys.append("CREATE TABLE materials (Id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, Name TEXT, Image TEXT, Description TEXT, Cost INTEGER, Unit TEXT, Amount DOUBLE);");
+    createQuerys.append("CREATE TABLE boughtElements (Id BIGINT PRIMARY KEY UNIQUE, customerId BIGINT REFERENCES customers (Id) ON DELETE SET NULL ON UPDATE CASCADE, elementsId BIGINT REFERENCES elements (Id) ON DELETE SET NULL ON UPDATE CASCADE);");
+    createQuerys.append("CREATE TABLE usedMaterials (Id BIGINT PRIMARY KEY, elementId  BIGINT REFERENCES elements (Id) ON DELETE SET NULL ON UPDATE CASCADE, materialId BIGINT REFERENCES materials (Id) ON DELETE CASCADE ON UPDATE SET NULL);");
 
-    query.prepare("CREATE TABLE elements (Id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, Name TEXT, Price INTEGER, Description TEXT, Source TEXT, Materials INTEGER);");
-
-    query.prepare("CREATE TABLE materials (Id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, Name TEXT, Image TEXT, Description TEXT, Cost INTEGER, Unit TEXT, Amount INTEGER);");
-
-
-    if(query.exec())
-    {
-        result = true;
-    } else {
-        dialog.setMessage("Database: Couldn't create Database.");
-        dialog.exec();
-        qDebug() << "createDb error:  "
-                  << query.lastError();
+    for(int i=0; i<createQuerys.size(); i++){
+        query.prepare(createQuerys.at(i));
+        if(!query.exec())
+        {
+            result = false;
+            dialog.setMessage("Database: Couldn't create Database.");
+            dialog.exec();
+            qDebug() << "createDb error:  " << query.lastError();
+        }
     }
 
     return result;

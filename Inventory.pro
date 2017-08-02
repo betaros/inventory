@@ -24,35 +24,34 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-        src/main.cpp \
-        src/mainwindow.cpp \
-		src/element.cpp \
-		src/customer.cpp \
-		src/material.cpp \
-		src/widgetmaterial.cpp \
-		src/widgetelement.cpp \
-		src/widgetcustomer.cpp \
-		src/database.cpp \
-    src/dialog.cpp
+    src/database.cpp \
+    src/dialog.cpp \
+    src/main.cpp \
+    src/mainwindow.cpp \
+    src/customer.cpp \
+    src/element.cpp \
+    src/material.cpp
 
 HEADERS += \
-        src/mainwindow.h \
-		src/element.h \
-		src/customer.h \
-		src/material.h \
-		src/config.h \
-		src/widgetmaterial.h \
-		src/widgetelement.h \
-		src/widgetcustomer.h \
-                src/database.h \
-    src/dialog.h
+    src/config.h \
+    src/database.h \
+    src/dialog.h \
+    src/mainwindow.h \
+    src/customer.h \
+    src/element.h \
+    src/material.h
 
 FORMS += \
-        src/mainwindow.ui \
-		src/widgetmaterial.ui \
-		src/widgetelement.ui \
-		src/widgetcustomer.ui \
-    src/dialog.ui
+    src/dialog.ui \
+    src/mainwindow.ui
 
 RESOURCES += \
-		resources.qrc
+    src/resources.qrc
+
+SUBDIRS += \
+    Inventory.pro
+
+DISTFILES += \
+    README.md \
+    .gitignore \
+    LICENSE

@@ -25,6 +25,8 @@ public:
     Material dbGetMaterial();
 
 private:
+    bool createDb();
+
     QSqlDatabase m_db;
     QString path;
     Dialog dialog;
